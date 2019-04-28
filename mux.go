@@ -367,6 +367,13 @@ func (r *Router) Walk(walkFn WalkFunc) error {
 // router that walk is about to descend down to should be skipped.
 var SkipRouter = errors.New("skip this router")
 
+//       |
+//       |      ( change to )
+//       V
+
+// ErrSkipRouter is ...
+var ErrSkipRouter = errors.New("skip this router")
+
 // WalkFunc is the type of the function called for each route visited by Walk.
 // At every invocation, it is given the current route, and the current router,
 // and a list of ancestor routes that lead to the current route.

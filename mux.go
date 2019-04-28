@@ -365,7 +365,10 @@ func (r *Router) Walk(walkFn WalkFunc) error {
 
 // SkipRouter is used as a return value from WalkFuncs to indicate that the
 // router that walk is about to descend down to should be skipped.
-var SkipRouter = errors.New("skip this router")
+// -- var SkipRouter = errors.New("skip this router") -- original
+
+// ErrSkipRouter is used as a return value from WalkFuncs to indicate that the
+var ErrSkipRouter = errors.New("skip this router") // -- begin with Err, according to golint
 
 // WalkFunc is the type of the function called for each route visited by Walk.
 // At every invocation, it is given the current route, and the current router,
@@ -375,7 +378,8 @@ type WalkFunc func(route *Route, router *Router, ancestors []*Route) error
 func (r *Router) walk(walkFn WalkFunc, ancestors []*Route) error {
 	for _, t := range r.routes {
 		err := walkFn(t, r, ancestors)
-		if err == SkipRouter {
+		// if err == SkipRouter { // -- original
+		if err == ErrSkipRouter { // -- modify
 			continue
 		}
 		if err != nil {
